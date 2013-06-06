@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="MyActivityDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/MyTitleStyle</item>
+    </style>
+
+    <style name="MyTitleStyle" parent="@android:style/TextAppearance.Theme.Dialog">
+        <item name="android:textAppearance">@style/MyTextApperance</item>
+    </style>
+
+    <style name="MyTextApperance" parent="@android:style/TextAppearance.DialogWindowTitle">
+         <item name="android:textColor">#ffff0000</item>
+         <item name="android:textSize">36sp</item>
+    </style>
+</resources>

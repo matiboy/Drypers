@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/loadingbg"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/loading_logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/loading_logo"
+        android:src="@drawable/logo" >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/loading_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loading_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-220dip"
+        android:background="@drawable/loader"
+        android:contentDescription="@string/loading_spinner" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loading_spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/text"
+        android:contentDescription="@string/loading_text" >
+    </ImageView>
+
+</RelativeLayout>

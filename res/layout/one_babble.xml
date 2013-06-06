@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/babble_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/this_babble_box"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/song_box"
+        android:gravity="top|left"
+        android:layout_gravity="top|left"  >
+
+        <Button
+            android:id="@+id/play_babble_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/play_selector"
+            android:contentDescription="@string/play" />
+
+        <LinearLayout
+            android:id="@+id/babble_item_middle"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:orientation="vertical" >
+
+            <ProgressBar
+                android:id="@+id/babble_item_progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="170dip"
+                android:layout_height="8dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/progress" />
+
+            <TextView
+                android:id="@+id/babble_song_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/song_name" />
+
+            <LinearLayout
+                android:id="@+id/babble_item_bottom"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/babble_babbler_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/babbler_name"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/babble_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/_3_july_1985"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/babble_item_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/babble_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rating" />
+
+            <TextView
+                android:id="@+id/babble_your_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dip"
+                android:text="@string/_10"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<previews>
+
+    <preview
+        name="Nexus 4"
+        config="layout-sw384dp-w384dp-h640dp-normal-long-port-notnight-xhdpi-finger-keyshidden-qwerty-navexposed-dpad-1280x768-v17"
+        device="Nexus 4"
+        devicestate="Portrait"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+    <preview
+        name="Nexus 4"
+        config="layout-sw533dp-w533dp-h853dp-normal-long-port-notnight-hdpi-finger-keyshidden-qwerty-navexposed-dpad-1280x800-v17"
+        device="Galaxy Note"
+        devicestate="Portrait"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+    <preview
+        name="Nexus 4"
+        config="layout-sw384dp-w384dp-h640dp-normal-long-port-notnight-xhdpi-finger-keyshidden-qwerty-navexposed-dpad-1280x768-v17"
+        device="Nexus 4"
+        devicestate="Portrait"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+    <preview
+        name="experia"
+        config="layout-sw360dp-w360dp-h640dp-normal-long-port-notnight-hdpi-finger-keyshidden-qwerty-navhidden-nonav-960x540-v17"
+        device="Experia P"
+        devicestate="Portrait"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+    <preview
+        name="Nexus one"
+        config="layout-sw320dp-w320dp-h533dp-normal-long-port-notnight-hdpi-finger-keyssoft-nokeys-navexposed-trackball-800x480-v17"
+        device="3.7in WVGA (Nexus One)"
+        devicestate="Portrait"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+
+</previews>

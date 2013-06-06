@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sharing_menu"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/sharing_menu_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/tri_indic_sharing_Top"
+            android:layout_width="17dp"
+            android:layout_height="14dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/tri_indic" />
+
+        <LinearLayout
+            android:id="@+id/sharing_r1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/gradient"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <Button
+                android:id="@+id/babble_edit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
+                android:text="Change babble title" />
+
+            <Button
+                android:id="@+id/babble_delete"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:text="Delete this babble" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/tri_indic_sharing_Bottom"
+            android:layout_width="17dp"
+            android:layout_height="14dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/tri_indic"
+            android:rotation="180" />
+
+    </LinearLayout>
+
+</LinearLayout>
