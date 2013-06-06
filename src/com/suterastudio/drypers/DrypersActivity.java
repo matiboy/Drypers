@@ -39,7 +39,7 @@ public class DrypersActivity extends GenericActivity {
 	// DEBUG only
 	private void fireReferral()
 	{
-		String url = "utm_source%3Dspiral%26utm_medium%3Din-app%26utm_term%3Dspiral%252C%2520drypers%26utm_content%3Dspiral%26utm_campaign%3Dspiral&babybabble=U687925049";
+		String url = "utm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_term%3Dspiral%26utm_content%3DdisplayAd1%26utm_campaign%3Dshoe%252Bcampaign";
 		Intent intent = new Intent();
 		intent.setAction("com.android.vending.INSTALL_REFERRER");
 		intent.putExtra("referrer", url);

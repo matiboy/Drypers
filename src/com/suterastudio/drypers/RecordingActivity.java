@@ -1,6 +1,5 @@
 package com.suterastudio.drypers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import net.sourceforge.autotalent.Autotalent;
 import org.customsoft.stateless4j.StateMachine;
 import org.customsoft.stateless4j.delegates.Action;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -196,7 +196,7 @@ public class RecordingActivity extends GenericActivity implements
 	}
 
 	private enum Trigger {
-		IDLE, RECORD, CANCEL, AUTOTUNE, PLAY, STOP, CONFIRM, UPLOAD
+		IDLE, RECORD, CANCEL, AUTOTUNE, PLAY, STOP, CONFIRM, UPLOAD, PAUSE
 	}
 
 	private Action mIdler = new Action() {
@@ -216,7 +216,7 @@ public class RecordingActivity extends GenericActivity implements
 		@Override
 		public void doIt() {
 			updateViews();
-			stopRecording();
+			pauseRecording();
 		}
 	};
 	private Action mAutotuner = new Action() {
@@ -261,14 +261,16 @@ public class RecordingActivity extends GenericActivity implements
 
 	public RecordingActivity() {
 		try {
-			mMachine.Configure(State.IDLING).OnEntry(mIdler)
+			mMachine.Configure(State.IDLING)
+					.OnEntry(mIdler)
 					.Permit(Trigger.RECORD, State.RECORDING)
 					.Permit(Trigger.PLAY, State.PLAYING)
 					.Permit(Trigger.CONFIRM, State.CONFIRMING);
 
 			mMachine.Configure(State.RECORDING).OnEntry(mRecorder)
 					.Permit(Trigger.CANCEL, State.CANCELING)
-					.Permit(Trigger.AUTOTUNE, State.AUTOTUNING);
+					.Permit(Trigger.AUTOTUNE, State.AUTOTUNING)
+					.Permit(Trigger.PAUSE, State.IDLING);
 
 			mMachine.Configure(State.CANCELING).OnEntry(mCanceler)
 					.Permit(Trigger.IDLE, State.IDLING);
@@ -343,7 +345,7 @@ public class RecordingActivity extends GenericActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
-
+		mTimerElapesd=0;
 		if (mSimpleRecorder != null) {
 			if (mSimpleRecorder.isRunning()) {
 				stopRecording();
@@ -427,7 +429,6 @@ public class RecordingActivity extends GenericActivity implements
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 
 		mPlayButton = new Button(this);
-		mPlayButton.setBackgroundResource(R.drawable.playbackbtn);
 		mPlayButton.setOnClickListener(mPlayClickListener);
 		ll2.addView(mPlayButton, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -481,7 +482,6 @@ public class RecordingActivity extends GenericActivity implements
 
 		// Create context pointer
 		mTemplateSelect.setOnClickListener(mTemplateClickListener);
-		updateViews();
 	}
 
 	private void doAutotuning() {
@@ -507,18 +507,20 @@ public class RecordingActivity extends GenericActivity implements
 			mAutotunePasses++;
 		}
 	}
-
+	protected int mTimerElapesd=0;
 	private void doCountDown(final MediaPlayer mediaPlayer) {
 		mSingingProgress.setMax(4800);
 		mSingingProgress.setProgress(0);
-		mCountdownTimer = new CountDownTimer(4800, 250) {
+		mCountdownTimer = new CountDownTimer(4800-mTimerElapesd, 250) {
 			public void onTick(long millisUntilFinished) {
+				mTimerElapesd=mTimerElapesd+ 250;
 				mSingingProgress
-						.setProgress(mSingingProgress.getProgress() + 250);
+						.setProgress(mTimerElapesd);
 			}
 
 			public void onFinish() {
 				mSingingProgress.setProgress(4800);
+				mTimerElapesd=0;
 				stopRecording();
 				this.cancel();
 			}
@@ -686,10 +688,17 @@ public class RecordingActivity extends GenericActivity implements
 	}
 
 	private void startRecording() {
-		mSimpleRecorder = new SimpleRecorder(this,
+		if (mTimerElapesd==0)
+		{
+			mSimpleRecorder = new SimpleRecorder(this,
 				DrypersResources.getLibraryDirectory(),
 				DrypersResources.SourceFile.getName(), this, false);
-		mSimpleRecorder.start();
+		
+			mSimpleRecorder.start();
+		}
+		else if (mSimpleRecorder!=null)
+			mSimpleRecorder.resume();
+			
 
 		// Singing Progress Indicator
 		doCountDown(mPlayerSong);
@@ -701,6 +710,21 @@ public class RecordingActivity extends GenericActivity implements
 
 	private void stopRecording() {
 		mSimpleRecorder.stop();
+		mCountdownTimer.cancel();
+
+		// Show button after recording process
+		// mRecordButton.setBackgroundResource(R.drawable.abtn_rerecord);
+
+		if (mMachine.CanFire(Trigger.IDLE)) {
+			try {
+				mMachine.Fire(Trigger.IDLE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	private void pauseRecording() {
+		mSimpleRecorder.pause();
 		mCountdownTimer.cancel();
 
 		// Show button after recording process
@@ -752,19 +776,19 @@ public class RecordingActivity extends GenericActivity implements
 
 			// mBackButton.setVisibility(View.VISIBLE);
 			// mMenuButton.setVisibility(View.VISIBLE);
-			buttonStateFlipper(mBackButton, true);
-			buttonStateFlipper(mMenuButton, true);
-			imageStateFlipper(mTemplateSelect, true);
+			viewStateFlipper(mBackButton, true);
+			viewStateFlipper(mMenuButton, true);
+			viewStateFlipper(mTemplateSelect, true);
 
 			mSingingBar.setVisibility(View.INVISIBLE);
 			mRecordButton.setVisibility(View.VISIBLE);
-			buttonStateFlipper(mRecordButton, true);
+			viewStateFlipper(mRecordButton, true);
 
-			if (mReadyToUpload) {
+			if (mReadyToUpload && mTimerElapesd==0) {
 				mPlayButton.setVisibility(View.VISIBLE);
 				mSaveButton.setVisibility(View.VISIBLE);
-				buttonStateFlipper(mPlayButton, true);
-				buttonStateFlipper(mSaveButton, true);
+				viewStateFlipper(mPlayButton, true);
+				viewStateFlipper(mSaveButton, true);
 
 				// Reset record button
 				mRecordButton.setBackgroundResource(R.drawable.abtn_rerecord);
@@ -778,6 +802,16 @@ public class RecordingActivity extends GenericActivity implements
 				mRecordButton.setBackgroundResource(R.drawable.record);
 				// Reset background
 				mainLayout.setBackgroundResource(R.drawable.babble_bg1);
+				if (mTimerElapesd!=0)
+				{
+					mSingingBar.setVisibility(View.VISIBLE);
+					viewStateFlipper(mSingingBar, false);
+					((TextView)findViewById(R.id.singing_progress_label)).setText(R.string.recording_paused);
+				}
+				else
+				{
+					mSingingBar.setVisibility(View.INVISIBLE);
+				}
 			}
 
 			// Reset background animation
@@ -786,13 +820,15 @@ public class RecordingActivity extends GenericActivity implements
 
 		case RECORDING:
 			// Show/Hide views
-			buttonStateFlipper(mBackButton, false);
-			buttonStateFlipper(mMenuButton, false);
-			imageStateFlipper(mTemplateSelect, false);
+			viewStateFlipper(mBackButton, false);
+			viewStateFlipper(mMenuButton, false);
+			viewStateFlipper(mTemplateSelect, false);
 
 			mSingingBar.setVisibility(View.VISIBLE);
+			viewStateFlipper(mSingingBar, true);
+			((TextView)findViewById(R.id.singing_progress_label)).setText(R.string.keep_singing_);
 			// mRecordButton.setVisibility(View.VISIBLE);
-			buttonStateFlipper(mRecordButton, true);
+			viewStateFlipper(mRecordButton, true);
 
 			mPlayButton.setVisibility(View.INVISIBLE);
 			mSaveButton.setVisibility(View.INVISIBLE);
@@ -818,20 +854,20 @@ public class RecordingActivity extends GenericActivity implements
 			mRecordButton.setVisibility(View.INVISIBLE);
 			mPlayButton.setVisibility(View.INVISIBLE);
 			mSaveButton.setVisibility(View.INVISIBLE);
-			buttonStateFlipper(mBackButton, false);
-			buttonStateFlipper(mMenuButton, false);
-			imageStateFlipper(mTemplateSelect, false);
+			viewStateFlipper(mBackButton, false);
+			viewStateFlipper(mMenuButton, false);
+			viewStateFlipper(mTemplateSelect, false);
 
 			break;
 
 		case CONFIRMING:
 			// Show/Hide views
-			buttonStateFlipper(mBackButton, false);
-			buttonStateFlipper(mMenuButton, false);
-			buttonStateFlipper(mRecordButton, false);
-			buttonStateFlipper(mPlayButton, false);
-			buttonStateFlipper(mSaveButton, false);
-			imageStateFlipper(mTemplateSelect, false);
+			viewStateFlipper(mBackButton, false);
+			viewStateFlipper(mMenuButton, false);
+			viewStateFlipper(mRecordButton, false);
+			viewStateFlipper(mPlayButton, false);
+			viewStateFlipper(mSaveButton, false);
+			viewStateFlipper(mTemplateSelect, false);
 
 			// mBackButton.setVisibility(View.INVISIBLE);
 			// mMenuButton.setVisibility(View.INVISIBLE);
@@ -843,17 +879,17 @@ public class RecordingActivity extends GenericActivity implements
 
 		case PLAYING:
 			// Show/Hide views
-			buttonStateFlipper(mBackButton, false);
-			buttonStateFlipper(mMenuButton, false);
-			imageStateFlipper(mTemplateSelect, false);
+			viewStateFlipper(mBackButton, false);
+			viewStateFlipper(mMenuButton, false);
+			viewStateFlipper(mTemplateSelect, false);
 			// mBackButton.setVisibility(View.INVISIBLE);
 			// mMenuButton.setVisibility(View.INVISIBLE);
 			mSingingBar.setVisibility(View.INVISIBLE);
 			// mRecordButton.setVisibility(View.INVISIBLE);
 			// mPlayButton.setVisibility(View.VISIBLE);
-			buttonStateFlipper(mRecordButton, false);
-			buttonStateFlipper(mPlayButton, true);
-			buttonStateFlipper(mSaveButton, false);
+			viewStateFlipper(mRecordButton, false);
+			viewStateFlipper(mPlayButton, true);
+			viewStateFlipper(mSaveButton, false);
 			// mSaveButton.setVisibility(View.INVISIBLE);
 
 			// Toggle main background
@@ -865,8 +901,8 @@ public class RecordingActivity extends GenericActivity implements
 
 		case STOPPING:
 			// Tenderly caress views
-			buttonStateFlipper(mSaveButton, true);
-			imageStateFlipper(mTemplateSelect, true);
+			viewStateFlipper(mSaveButton, true);
+			viewStateFlipper(mTemplateSelect, true);
 
 			// Toggle main background
 			mainLayout.setBackgroundResource(R.drawable.babble_bg1);
@@ -877,10 +913,10 @@ public class RecordingActivity extends GenericActivity implements
 
 		case UPLOADING:
 			// Show/Hide views
-			buttonStateFlipper(mRecordButton, false);
-			buttonStateFlipper(mPlayButton, false);
-			buttonStateFlipper(mSaveButton, false);
-			imageStateFlipper(mTemplateSelect, false);
+			viewStateFlipper(mRecordButton, false);
+			viewStateFlipper(mPlayButton, false);
+			viewStateFlipper(mSaveButton, false);
+			viewStateFlipper(mTemplateSelect, false);
 			// mRecordButton.setVisibility(View.INVISIBLE);
 			// mSaveButton.setVisibility(View.INVISIBLE);
 			// mPlayButton.setVisibility(View.INVISIBLE);
@@ -890,26 +926,19 @@ public class RecordingActivity extends GenericActivity implements
 
 	}
 
-	private void buttonStateFlipper(Button button, Boolean state) {
+	@SuppressLint("NewApi")
+	private void viewStateFlipper(View view, Boolean state) {
 		if (state) {
-			button.setEnabled(true);
-			button.setAlpha(1f);
+			view.setEnabled(true);
+			view.setAlpha(1f);
 		} else {
-			button.setEnabled(false);
-			button.setAlpha(0.3f);
+			view.setEnabled(false);
+			view.setAlpha(0.3f);
 		}
 	}
 	
-	private void imageStateFlipper(ImageView imageView, Boolean state) {
-		if (state) {
-			imageView.setEnabled(true);
-			imageView.setAlpha(1f);
-		} else {
-			imageView.setEnabled(false);
-			imageView.setAlpha(0.3f);
-		}
-	}
 	
+	@SuppressLint("NewApi")
 	private void verifyAutotuneIntegrity() {
 		File autotuneFile = DrypersResources.AutotunePasses
 				.get(mAutotunePasses - 1);
@@ -983,7 +1012,7 @@ public class RecordingActivity extends GenericActivity implements
 	public void onRecord() {
 		// Check if still singing
 		// Check if can fire a
-		if (mMachine.IsInState(State.RECORDING)) {
+		if (mMachine.IsInState(State.RECORDING) && mTimerElapesd==0) {
 			try {
 				mMachine.Fire(Trigger.AUTOTUNE);
 			} catch (Exception e) {

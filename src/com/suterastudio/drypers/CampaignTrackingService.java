@@ -1,8 +1,6 @@
 package com.suterastudio.drypers;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -28,12 +26,9 @@ import org.apache.http.HttpConnection;
 import org.apache.http.client.utils.URIBuilder;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.IBinder;
-import android.util.Log;
 
 public class CampaignTrackingService extends Service {
 	
@@ -68,21 +63,19 @@ public class CampaignTrackingService extends Service {
             String[] pair = param.split("="); // $NON-NLS-1$
             referralParams.put(pair[0], pair[1]);
         }
-        Log.e("Drypers", CAMPAIGN_TERM);
         String source = referralParams.get("utm_source");
         if(source == null) {
         	source = "";        	
         }
-        Log.e("Drypers", source.toString());
         String term = referralParams.get("utm_term");
         if(term == null) {
         	term = "";        	
         }
-        Log.e("Drypers", term.toString());
         if(source.equals(CAMPAIGN_TERM) || term.equals(CAMPAIGN_TERM))
         {
+	        
 	        URL url = buildUri(referralParams);
-	        Log.e("Drypers", url.toString());
+	        
 	        if(url != null){
 	        	try {
 					URLConnection connection = url.openConnection();
@@ -90,20 +83,6 @@ public class CampaignTrackingService extends Service {
 					String encoding = connection.getContentEncoding();
 					encoding = encoding == null ? "UTF-8" : encoding;
 					String body = IOUtils.toString(in, encoding);
-					Log.e("Drypers", encoding);
-//					File root = Environment.getExternalStorageDirectory();
-//					File file = new File(root, "dryperstest.txt");
-//				    try {
-//				        if (root.canWrite()) {
-//				            FileWriter filewriter = new FileWriter(file, true);
-//					        BufferedWriter out = new BufferedWriter(filewriter);
-//					        out.write(url.toString());
-//				            out.close();
-//				        }
-//				    }
-//			        catch (IOException e) {
-//				        Log.e("TAG", "Could not write file " + e.getMessage());
-//					}
 					body = "";
 					// TODO Do something with the body?
 				} catch (IOException e) {
@@ -111,23 +90,9 @@ public class CampaignTrackingService extends Service {
 					e.printStackTrace();
 				}
 	        }
-	        
-        }  
-        fireGAReferral(referrer);
+        }   
         
 		return START_NOT_STICKY;
-	}
-	
-	// DEBUG only
-	private void fireGAReferral(String url)
-	{
-//		Intent intent = new Intent();
-//		intent.setAction("com.android.vending.INSTALL_REFERRER");
-//		intent.putExtra("referrer", url);
-//		sendBroadcast(intent);
-		Intent service = new Intent(this, com.google.analytics.tracking.android.CampaignTrackingService.class);
-        service.putExtra("referrer", url);
-        this.startService(service);
 	}
 	
 	private URL buildUri(Map<String, String> params){

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.suterastudio.drypers" android:installLocation="preferExternal"
-	android:versionCode="17" android:versionName="1.1.6">
+	android:versionCode="13" android:versionName="1.1.2">
 
 	<supports-screens android:anyDensity="true"
 		android:largeScreens="true" android:normalScreens="true"
@@ -32,13 +32,13 @@
 			android:value="@string/app_id" />
 
 		<!-- Used for install referral measurement-->
-		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
-<!-- <receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
+<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+<receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
   <intent-filter>
     <action android:name="com.android.vending.INSTALL_REFERRER" />
   </intent-filter>
 </receiver>
--->
+
 		<service android:name="com.suterastudio.drypers.CampaignTrackingService" />
 
 		<receiver android:name="com.suterastudio.drypers.ReferralReceiver" android:exported="true">

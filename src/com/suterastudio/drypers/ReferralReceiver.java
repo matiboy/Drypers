@@ -17,7 +17,6 @@ public class ReferralReceiver extends BroadcastReceiver
 	    @Override
 	    public void onReceive(Context context, Intent intent)
 	    {
-	    	Log.e("Drypers", intent.getAction());
 	    	try
 	        {
 	            final Bundle extras = intent.getExtras();
@@ -36,7 +35,7 @@ public class ReferralReceiver extends BroadcastReceiver
 	        }
 	 
 	        String referrer = intent.getStringExtra("referrer"); //$NON-NLS-1$
-	        Log.e("Drypers", referrer);
+	        
 	        Intent service = new Intent(context, CampaignTrackingService.class);
 	        service.putExtra("referrer", referrer);
 	        context.startService(service);

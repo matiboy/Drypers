@@ -48,6 +48,7 @@ public class SimpleRecorder implements Recorder {
     @Override
     public void start() {
         try {
+        	resuming=false;
             writerThread = new MicWriter(mPath, mName);
             writerThread.start();
             Log.i(this.getClass().toString(), "Started recording");
@@ -57,6 +58,30 @@ public class SimpleRecorder implements Recorder {
         }
     }
 
+	public void resume() {
+		   try {
+			   resuming=true;
+	            writerThread = new MicWriter(mPath, mName);
+	            writerThread.start(); 
+	            Log.i(this.getClass().toString(), "Resumed recording");
+		          
+	        } catch (IllegalArgumentException e) {
+	            Log.e(this.getClass().toString(), e.getMessage());
+	            getPostRecordTask().onException(new RecordException(e.getMessage()));
+	        }
+    }
+
+    @Override
+	public void pause() {
+		 if (isRunning()) {
+	            writerThread.pause();
+	            Log.i(this.getClass().toString(), "Paused recording");
+	            try {
+	                writerThread.join();
+	            } catch (InterruptedException e) {}
+		 }
+		
+	}
     @Override
     public void stop() {
         if (isRunning()) {
@@ -107,18 +132,23 @@ public class SimpleRecorder implements Recorder {
             }
         }
     };
- 
+
+    protected static WaveWriter writer;
+    protected static boolean resuming;
+	protected static AudioRecord audioRecord;
     private class MicWriter extends Thread {
-    	private final AudioRecord audioRecord;
         private AudioTrack audioTrack;
-        private final WaveWriter writer;
         private WaveReader instrumentalReader;
         private boolean running;
+        private boolean finished;
 
         public MicWriter(String path, String name) throws IllegalArgumentException {
         	this.running = false;
-            this.audioRecord = AudioHelper.getRecorder(context);
-            this.writer = new WaveWriter(path,
+        	this.finished=false;
+        	if (!resuming)
+        		audioRecord = AudioHelper.getRecorder(context);
+            if (!resuming)
+            writer = new WaveWriter(path,
                     name, sampleRate,
                     AudioHelper.getChannelConfig(AudioConstants.DEFAULT_CHANNEL_CONFIG),
                     AudioHelper.getPcmEncoding(AudioConstants.DEFAULT_PCM_FORMAT));
@@ -134,15 +164,22 @@ public class SimpleRecorder implements Recorder {
             }          
         }
 
-        public synchronized void close() {
+        public synchronized void close() { 
+        	finished=true;
             running = false;
+           
         }
-
+        public synchronized void pause()
+        {
+        	finished=false;
+        	running=false;
+        }
         public void initialize() throws FileNotFoundException, InvalidWaveException, IOException {
             if (instrumentalReader != null) {
                 instrumentalReader.openWave();
                 Resample.initialize(instrumentalReader.getSampleRate(), sampleRate, Resample.DEFAULT_BUFFER_SIZE, instrumentalReader.getChannels());
             }
+            if (!resuming)
             writer.createWaveFile();
             if (isLiveMode) {
                 AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -186,7 +223,9 @@ public class SimpleRecorder implements Recorder {
             try {
                 initialize();
                 running = true;
-                audioRecord.startRecording();
+                finished=true;
+                if(!resuming)
+                	audioRecord.startRecording();
                 if (isLiveMode) {
                     audioTrack.play();
                 }
@@ -212,8 +251,15 @@ public class SimpleRecorder implements Recorder {
                 e.printStackTrace();
                 msg = recorderHandler.obtainMessage(RECORDER_MESSAGE_IO_ERROR);
             }
-            cleanup();
-            recorderHandler.sendMessage(msg);
+            if (finished)
+            {
+            	cleanup();
+            	recorderHandler.sendMessage(msg);
+            }
+            else
+            {
+                Log.i(this.getClass().toString(), "Stopping Thread");
+            }
         }
 
         private void processLiveAudio(short[] samples, int numSamples) throws IOException {
@@ -236,4 +282,6 @@ public class SimpleRecorder implements Recorder {
             }
         }        
     }
+
+	
 }
