@@ -68,29 +68,40 @@ public class CampaignTrackingService extends Service {
             String[] pair = param.split("="); // $NON-NLS-1$
             referralParams.put(pair[0], pair[1]);
         }
-        Log.e("Drypers", CAMPAIGN_TERM);
+        Log.d("Drypers", CAMPAIGN_TERM);
         String source = referralParams.get("utm_source");
         if(source == null) {
         	source = "";        	
         }
-        Log.e("Drypers", source.toString());
+        Log.d("Drypers", source.toString());
         String term = referralParams.get("utm_term");
         if(term == null) {
         	term = "";        	
         }
-        Log.e("Drypers", term.toString());
+        Log.d("Drypers", term.toString());
         if(source.equals(CAMPAIGN_TERM) || term.equals(CAMPAIGN_TERM))
         {
-	        URL url = buildUri(referralParams);
-	        Log.e("Drypers", url.toString());
+	        final URL url = buildUri(referralParams);
+	        Log.d("Drypers", url.toString());
 	        if(url != null){
-	        	try {
-					URLConnection connection = url.openConnection();
-					InputStream in = connection.getInputStream();
-					String encoding = connection.getContentEncoding();
-					encoding = encoding == null ? "UTF-8" : encoding;
-					String body = IOUtils.toString(in, encoding);
-					Log.e("Drypers", encoding);
+	        	
+	        		new Thread(new Runnable() {
+	        		    public void run() {
+	        		    	try {
+	        		    		URLConnection connection = url.openConnection();
+	        		    		InputStream in = connection.getInputStream();
+	        		    		String encoding = connection.getContentEncoding();
+	        		    		encoding = encoding == null ? "UTF-8" : encoding;
+	        		    		String body = IOUtils.toString(in, encoding);
+	        		    		Log.d("Drypers", encoding);
+	        		    		body = "";
+	        		    	} catch (IOException e) {
+	        					// TODO Auto-generated catch block
+	        					e.printStackTrace();
+	        				}
+	        		    }
+	        		  }).start();
+					
 //					File root = Environment.getExternalStorageDirectory();
 //					File file = new File(root, "dryperstest.txt");
 //				    try {
@@ -104,12 +115,7 @@ public class CampaignTrackingService extends Service {
 //			        catch (IOException e) {
 //				        Log.e("TAG", "Could not write file " + e.getMessage());
 //					}
-					body = "";
-					// TODO Do something with the body?
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 	        }
 	        
         }  
@@ -117,6 +123,7 @@ public class CampaignTrackingService extends Service {
         
 		return START_NOT_STICKY;
 	}
+	
 	
 	// DEBUG only
 	private void fireGAReferral(String url)
