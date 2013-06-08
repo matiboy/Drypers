@@ -42,26 +42,21 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
 
-        <!-- Used for install referral measurement -->
-        <service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
+      <!-- Used for install referral measurement-->
+		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+<!-- <receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
+  <intent-filter>
+    <action android:name="com.android.vending.INSTALL_REFERRER" />
+  </intent-filter>
+</receiver>
+-->
+		<service android:name="com.suterastudio.drypers.CampaignTrackingService" />
 
-        <receiver
-            android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.suterastudio.drypers.CampaignTrackingService" />
-
-        <receiver
-            android:name="com.suterastudio.drypers.ReferralReceiver"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
+		<receiver android:name="com.suterastudio.drypers.ReferralReceiver" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
 
         <activity
             android:name="com.suterastudio.drypers.DrypersActivity"
@@ -211,5 +206,4 @@
         </activity>
         
     </application>
-
 </manifest>
