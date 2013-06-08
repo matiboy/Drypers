@@ -30,7 +30,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -254,6 +257,7 @@ public class RecordingActivity extends GenericActivity implements
 			startUploading();
 		}
 	};
+	private int topMargin;
 
 	// //
 	// Constructor(s)
@@ -333,7 +337,7 @@ public class RecordingActivity extends GenericActivity implements
 		// appropriately
 		mGender = DrypersResources.ThawGender(this);
 		if (mGender == Gender.BOY) {
-			babyGender.setBackgroundResource(R.drawable.baby_whead);
+			babyGender.setBackgroundResource(R.drawable.babble_baby_male_animation);
 		} else {
 			babyGender.setBackgroundResource(R.drawable.babygirl2);
 		}
@@ -463,7 +467,7 @@ public class RecordingActivity extends GenericActivity implements
 		// appropriately
 		mGender = DrypersResources.ThawGender(this);
 		if (mGender == Gender.BOY) {
-			babyGender.setBackgroundResource(R.drawable.baby_whead);
+			babyGender.setBackgroundResource(R.drawable.babble_baby_male_animation);
 		} else {
 			babyGender.setBackgroundResource(R.drawable.babygirl2);
 		}
@@ -482,6 +486,30 @@ public class RecordingActivity extends GenericActivity implements
 
 		// Create context pointer
 		mTemplateSelect.setOnClickListener(mTemplateClickListener);
+		
+		//Image
+		mBabyHead= findViewById(R.id.male_baby);
+		//Button
+		mPauseRecordBtn=findViewById(R.id.recording_button_pause);
+		mPauseRecordBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (mMachine.IsInState(State.RECORDING))
+				{
+					try {
+						mTimerElapesd=0;
+						stopRecording();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		});
+		//margin
+		topMargin=((FrameLayout.LayoutParams)babyHead.getLayoutParams()).topMargin;
 	}
 
 	private void doAutotuning() {
@@ -508,6 +536,9 @@ public class RecordingActivity extends GenericActivity implements
 		}
 	}
 	protected int mTimerElapesd=0;
+	private View mBabyHead;
+	private CountDownTimer mAnimTimer;
+	private View mPauseRecordBtn;
 	private void doCountDown(final MediaPlayer mediaPlayer) {
 		mSingingProgress.setMax(4800);
 		mSingingProgress.setProgress(0);
@@ -770,6 +801,7 @@ public class RecordingActivity extends GenericActivity implements
 		// Melody animation
 		final LinearLayout recordAnimation = (LinearLayout) findViewById(R.id.recording_anim_layer);
 
+		mPauseRecordBtn.setVisibility(View.INVISIBLE);
 		switch (mMachine.getState()) {
 		case IDLING:
 			// Show/Hide views
@@ -823,6 +855,8 @@ public class RecordingActivity extends GenericActivity implements
 			viewStateFlipper(mBackButton, false);
 			viewStateFlipper(mMenuButton, false);
 			viewStateFlipper(mTemplateSelect, false);
+			
+			mPauseRecordBtn.setVisibility(View.VISIBLE);
 
 			mSingingBar.setVisibility(View.VISIBLE);
 			viewStateFlipper(mSingingBar, true);
@@ -897,6 +931,43 @@ public class RecordingActivity extends GenericActivity implements
 
 			// Set play button to stop
 			mPlayButton.setBackgroundResource(R.drawable.stopplaybtn);
+			
+			//Animation
+			mAnimTimer = new CountDownTimer(30000,500) {
+				int i=0;
+				@Override
+				public void onTick(long millisUntilFinished) {
+					// TODO Auto-generated method stub
+					
+					if (((AnimationDrawable)findViewById(R.id.head_final).getBackground()).isRunning())
+					{
+						FrameLayout.LayoutParams params= ((FrameLayout.LayoutParams)mBabyHead.getLayoutParams());
+						params.topMargin=i%2==0? topMargin:topMargin-10;
+						mBabyHead.setLayoutParams(params);
+						i++;
+					}
+					else
+					{
+						FrameLayout.LayoutParams params= ((FrameLayout.LayoutParams)mBabyHead.getLayoutParams());
+						params.topMargin=topMargin;
+						mBabyHead.setLayoutParams(params);
+					}
+				}
+				
+				@Override
+				public void onFinish() {
+					FrameLayout.LayoutParams params= ((FrameLayout.LayoutParams)mBabyHead.getLayoutParams());
+					params.topMargin=topMargin;
+					mBabyHead.setLayoutParams(params);
+				}
+			};
+			findViewById(R.id.head_final).setBackgroundResource(R.drawable.babble_baby_male_animation);
+			((AnimationDrawable)findViewById(R.id.head_final).getBackground()).start();
+			mAnimTimer.start();
+//			Animation animation=AnimationUtils.loadAnimation(this, R.anim.head_animation);
+//			animation.setRepeatCount(Animation.INFINITE);
+//			findViewById(R.id.male_baby).startAnimation(animation);
+			
 			break;
 
 		case STOPPING:
@@ -909,8 +980,17 @@ public class RecordingActivity extends GenericActivity implements
 
 			// Set play button to play
 			mPlayButton.setBackgroundResource(R.drawable.playbackbtn);
+			//Stop Animation
+			if (mBabyHead!=null &&mAnimTimer!=null)
+			{
+				((AnimationDrawable)findViewById(R.id.head_final).getBackground()).stop();
+				findViewById(R.id.head_final).setBackgroundDrawable(null);
+				findViewById(R.id.head_final).setBackgroundResource(R.drawable.babble_baby_male_animation);
+				mAnimTimer.cancel();
+//				findViewById(R.id.male_baby).clearAnimation();
+			}
 			break;
-
+			
 		case UPLOADING:
 			// Show/Hide views
 			viewStateFlipper(mRecordButton, false);
