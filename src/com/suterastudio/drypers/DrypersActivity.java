@@ -75,7 +75,7 @@ public class DrypersActivity extends GenericActivity {
 										"Logged in, please provide a baby photo.",
 										Toast.LENGTH_SHORT).show();
 							}
-							if (TargetActivity == RecordingActivity.class) {
+							if (TargetActivity == ChooseModeActivity.class) {
 								Toast.makeText(
 										context,
 										"Logged in using registered account...",
@@ -96,7 +96,7 @@ public class DrypersActivity extends GenericActivity {
 		DrypersResources.Thaw(this);
 
 		if (DrypersResources.getBabbler() != null) {
-			TargetActivity = RecordingActivity.class;
+			TargetActivity = ChooseModeActivity.class;
 			if (!DrypersResources.BabyHead.exists()) {
 				TargetActivity = BabbleActivity.class;
 			}

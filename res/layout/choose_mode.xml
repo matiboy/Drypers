@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/bg_baby">
+	<RelativeLayout
+        android:id="@+id/recording_menubar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@drawable/top_bar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true" >
+
+        <Button
+            android:id="@+id/back_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/abtn_back"
+            android:gravity="left" />
+
+        <Button
+            android:id="@+id/menu_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/abtn_menu_selector"
+            android:gravity="right" />
+    </RelativeLayout>
+    
+	<RelativeLayout
+        android:id="@+id/recording_anim_layer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/recording_menubar"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+
+            <FrameLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:measureAllChildren="false" >
+
+                <ImageView
+                    android:id="@+id/male_baby"
+                    android:layout_width="155dip"
+                    android:layout_height="155dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-96dip"
+                    android:scaleType="centerInside" />
+
+                <ImageView
+                    android:id="@+id/head_final"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-20dp"
+                    android:background="@drawable/baby_whead" />
+
+                
+            </FrameLayout>
+            <LinearLayout android:id="@+id/recording_buttons" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="bottom|center" android:layout_marginBottom="5dp" android:gravity="bottom|center" android:orientation="vertical"
+                android:layout_below="@+id/RelativeLayout1"
+                android:layout_centerHorizontal="true">
+
+                    <LinearLayout android:id="@+id/recording_buttons_2nd_row" android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                        <ImageView android:id="@+id/button_learn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" android:scaleType="fitCenter" android:src="@drawable/choose_learning" />
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/recording_buttons_1st_row" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
+                        
+    <ImageView android:id="@+id/button_babble" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" android:src="@drawable/choose_babble" android:scaleType="fitCenter" />
+                    </LinearLayout>
+                </LinearLayout>
+    </RelativeLayout>
+    
+
+   
+
+</RelativeLayout>

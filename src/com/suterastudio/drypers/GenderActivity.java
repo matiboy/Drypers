@@ -112,7 +112,7 @@ public class GenderActivity extends GenericActivity {
 				// setBabbleGender(Gender.BOY.toString());
 				DrypersResources.FreezeGender(Gender.BOY.toString(), context);
 				startActivity(new Intent(GenderActivity.this,
-						RecordingActivity.class));
+						ChooseModeActivity.class));
 			}
 
 		});
@@ -124,7 +124,7 @@ public class GenderActivity extends GenericActivity {
 				// setBabbleGender(Gender.GIRL.toString());
 				DrypersResources.FreezeGender(Gender.GIRL.toString(), context);
 				startActivity(new Intent(GenderActivity.this,
-						RecordingActivity.class));
+						ChooseModeActivity.class));
 			}
 		});
 	}

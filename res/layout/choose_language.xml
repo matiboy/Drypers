@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_baby" >
+
+    <RelativeLayout
+        android:id="@+id/recording_menubar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:background="@drawable/top_bar"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/back_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/abtn_back"
+            android:gravity="left" />
+
+        <Button
+            android:id="@+id/menu_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/abtn_menu_selector"
+            android:gravity="right" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearContent"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/active_template_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/active_template"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:background="@drawable/chooslanguage_template"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:id="@+id/template_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-32dp"
+                android:text="@string/shake_it_n_love_it"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/chooselanguage_image_bahasa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chooselanguage_bahasa"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/chooselanguage_image_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/chooslanguage_english" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
- <resources>
+ <resources xmlns:tools="https://schemas.android.com/tools"
+     tools:ignore="MissingTranslation">
    <string-array name="listOptions">
      <item>Option 1</item>
      <item>Option 2</item>

@@ -101,8 +101,8 @@
                     android:layout_width="155dip"
                     android:layout_height="155dip"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-130dip"
-                    android:scaleType="centerInside"/>
+                    android:layout_marginTop="-96dip"
+                    android:scaleType="centerInside" />
 
                 <ImageView
                     android:id="@+id/head_final"
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="-20dp"
-                    android:background="@drawable/babble_baby_male_animation" />
+                    android:background="@drawable/baby_whead" />
 
                 <LinearLayout
                     android:id="@+id/recording_buttons"
@@ -120,13 +120,7 @@
                     android:layout_marginBottom="5dp"
                     android:gravity="bottom|center"
                     android:orientation="vertical" >
-					<Button
-                        android:id="@+id/recording_button_pause"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/recordstop"
-                        android:visibility="invisible"
-                        android:orientation="vertical"/>
+
                     <LinearLayout
                         android:id="@+id/recording_buttons_1st_row"
                         android:layout_width="wrap_content"

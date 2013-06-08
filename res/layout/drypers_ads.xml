@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_baby" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:background="@drawable/drypers_banner" >
+
+        <Button
+            android:id="@+id/back_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/abtn_back" />
+
+        <Button
+            android:id="@+id/menu_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/abtn_menu_selector"
+			android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dypers_image_main"
+        android:layout_width="305dp"
+        android:layout_height="305dp"
+        android:maxWidth="100dp"
+        android:maxHeight="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/drypers_web" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dypers_image_main"
+        android:layout_centerHorizontal="true"
+        android:text="Get More With Drypers !"
+        android:textColor="#262261"
+        android:textSize="18dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_below="@+id/dypers_image_main"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/dypers_image_main"
+        android:layout_alignRight="@+id/dypers_image_main"
+        android:gravity="center">
+        
+        <Button android:id="@+id/drypers_btn_web"
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:background="@drawable/drypers_web_active"/>
+        
+        <Button android:id="@+id/drypers_btn_facebook"
+         android:layout_marginLeft="9dp"
+         android:layout_marginRight="9dp"
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:background="@drawable/drypers_facebook_inactive"/>
+        
+        <Button android:id="@+id/drypers_btn_happyfamily"
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:layout_marginRight="9dp"
+         android:background="@drawable/drypers_happyfamily_inactive"/>
+        
+        <Button android:id="@+id/drypers_btn_promo"
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:background="@drawable/drypers_promo_inactive"/>
+        
+    </LinearLayout>
+
+</RelativeLayout>

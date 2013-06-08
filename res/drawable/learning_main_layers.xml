@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/__learning_shadow" android:id="@+id/__shadow"/>
+    <item android:drawable="@drawable/__learning_a" android:id="@+id/__letter"/>
+    <item android:drawable="@drawable/__learning_baby1" android:id="@+id/__baby1"/>
+    <item android:drawable="@drawable/__learning_ayam" android:id="@+id/__object"/>
+    
+
+</layer-list>

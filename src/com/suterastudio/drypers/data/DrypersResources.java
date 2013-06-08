@@ -76,6 +76,32 @@ public class DrypersResources {
 			DrypersResources.getLibraryDirectory() + "autotuned4.wav");
 	public static File AutotunePass5 = new File(
 			DrypersResources.getLibraryDirectory() + "autotuned5.wav");
+	
+	
+	public static File Learning_A_Bahasa = new File(
+			DrypersResources.getLibraryDirectory() + "a_bah.mp3");
+	public static File Learning_B_Bahasa = new File(
+			DrypersResources.getLibraryDirectory() + "b_bah.mp3");
+	public static File Learning_C_Bahasa = new File(
+			DrypersResources.getLibraryDirectory() + "c_bah.mp3");
+	public static File Learning_D_Bahasa = new File(
+			DrypersResources.getLibraryDirectory() + "d_bah.mp3");
+	public static File Learning_E_Bahasa = new File(
+			DrypersResources.getLibraryDirectory() + "e_bah.mp3");
+	
+
+	public static File Learning_A_English = new File(
+			DrypersResources.getLibraryDirectory() + "a_eng.mp3");
+	public static File Learning_B_English = new File(
+			DrypersResources.getLibraryDirectory() + "b_eng.mp3");
+	public static File Learning_C_English = new File(
+			DrypersResources.getLibraryDirectory() + "c_eng.mp3");
+	public static File Learning_D_English = new File(
+			DrypersResources.getLibraryDirectory() + "d_eng.mp3");
+	public static File Learning_E_English = new File(
+			DrypersResources.getLibraryDirectory() + "e_eng.mp3");
+	
+	
 	public static final List<File> AutotunePasses = new ArrayList<File>() {
 		{
 			add(AutotunePass1);

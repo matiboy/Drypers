@@ -112,12 +112,7 @@ public class MenuCreatorActivity extends GenericActivity implements
 		umDrypers.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				// web browser intent
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse("http://www.drypers.com.my"));
-
-				connectionDialog(browserIntent);
+				startActivity(new Intent(MenuCreatorActivity.this,DrypersAdsActivity.class));
 			}
 
 		});

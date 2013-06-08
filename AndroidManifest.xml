@@ -181,6 +181,35 @@
             android:name="com.facebook.LoginActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.suterastudio.drypers.LearningActivity"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:noHistory="false"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name="com.suterastudio.drypers.ChooseModeActivity"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:noHistory="false"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name="com.suterastudio.drypers.ChooseLanguageActivity"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:noHistory="false"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.suterastudio.drypers.DrypersAdsActivity"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
+        </activity>
+        
     </application>
 
 </manifest>

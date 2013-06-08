@@ -324,7 +324,12 @@ public class RecordingActivity extends GenericActivity implements
 
 		// Manage (and potentially create) and Songs
 		checkSongs();
+		
 
+		//Set song from previous activity
+		String template=ContextHelper.getSelectedSong();
+		if (template!=null &&!template.isEmpty())
+			mTemplateText.setText(template);
 		// Set song
 		setSong();
 	}
@@ -613,7 +618,7 @@ public class RecordingActivity extends GenericActivity implements
 	private void setSong() {
 		// Set song title
 		mSongTitle = mTemplateText.getText().toString();
-
+		ContextHelper.setSelectedSong(mSongTitle);
 		Log.i(this.getClass().toString(), "Template Selected: " + mSongTitle);
 
 		if (mSongTitle.equals("pop A")) {

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff" >
+
+    <ImageView
+        android:id="@+id/learning_image_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/recording_menubar"
+        android:scaleType="fitXY"
+        android:src="@drawable/learning_bg" />
+
+    <LinearLayout
+        android:id="@+id/recording_menubar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0"
+        android:background="@drawable/top_bar"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/back_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/abtn_back"
+            android:gravity="left" />
+
+        <LinearLayout
+            android:id="@+id/active_template_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/active_template"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/songs_title" />
+
+            <TextView
+                android:id="@+id/template_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-22dp"
+                android:text="@string/shake_it_n_love_it"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/menu_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/abtn_menu_selector"
+            android:gravity="right" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/learning_area_repeat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout1"
+        android:layout_below="@+id/recording_menubar"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingTop="50dp">
+
+        <ImageView
+            android:id="@+id/learning_shadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/framlay1"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
+            android:contentDescription="@string/babbleimage"
+            android:src="@drawable/__learning_shadow" />
+
+        <ImageView
+            android:id="@+id/learning_image_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/learning_shadow"
+            android:layout_alignRight="@+id/learning_shadow"
+            android:contentDescription="@string/babbleimage"
+            android:paddingBottom="15sp"
+            android:paddingRight="10sp"
+            android:src="@drawable/__learning_a" />
+
+        <RelativeLayout
+            android:id="@+id/framlay1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/learning_shadow"
+            android:gravity="center"
+            android:paddingBottom="5sp"
+            android:paddingLeft="10sp" >
+
+            <ImageView
+                android:id="@+id/learning_baby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/babbleimage"
+                android:paddingBottom="5sp"
+                android:src="@drawable/__learning_baby1" />
+
+            <ImageView
+                android:id="@+id/learning_image_babyhead"
+                android:layout_width="190sp"
+                android:layout_height="190sp"
+                android:layout_alignTop="@+id/learning_baby"
+				android:layout_alignLeft="@+id/learning_baby"
+                android:layout_marginLeft="-13sp"
+                android:layout_marginTop="-32sp"
+                android:scaleType="fitXY"
+                android:rotation="6" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/learning_image_object"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/learning_shadow"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/babbleimage"
+            android:paddingBottom="6sp"
+            android:src="@drawable/__learning_ayam" />
+
+        <ImageView
+            android:id="@+id/learning_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/learning_image_letter"
+            android:layout_alignTop="@+id/framlay1"
+            android:src="@drawable/learning_tap_to_repeate"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lay111"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/learning_btn_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/abtn_left" />
+
+        <ImageView
+            android:id="@+id/learning_image_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/learning_btn_right"
+            android:layout_toRightOf="@+id/learning_btn_left"
+            android:scaleType="fitCenter"
+            android:src="@drawable/__learning_a_bahasa" />
+
+        <Button
+            android:id="@+id/learning_btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/abtn_right" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/lay111"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="30dp" 
+        android:foregroundGravity="center_horizontal">
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/learning_button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/save_big" />
+    </FrameLayout>
+
+</RelativeLayout>

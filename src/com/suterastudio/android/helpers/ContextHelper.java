@@ -22,8 +22,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.suterastudio.drypers.data.DrypersResources;
+import com.suterastudio.drypers.data.LanguagePreference;
 
 public class ContextHelper {
+
+	private static LanguagePreference chosenLanguage=LanguagePreference.BAHASA_MALAYSIA;
 
 	public static String getRealPathFromURI(ContentResolver contentResolver,
 			Uri contentURI) {
@@ -133,5 +136,23 @@ public class ContextHelper {
 		}
 		in.close();
 		out.close();
+	}
+
+	public static LanguagePreference thawChosenLanguage() {
+		return chosenLanguage;
+	}
+
+	public static void freezeChosenLanguage(LanguagePreference preference) {
+		chosenLanguage=preference;
+		
+	}
+	private static String selectedTemplate;
+	public static void setSelectedSong(String string) {
+		selectedTemplate=string;
+		
+	}
+	public static String getSelectedSong()
+	{
+		return selectedTemplate;
 	}
 }
